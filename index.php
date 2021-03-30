@@ -23,6 +23,11 @@ if (isset($_POST['ville']) && isset($_POST['haut']) && isset($_POST['bas'])) {
     //header('location: ../');
 }
 
+if (isset($_GET['supprimer_ville'])) {
+    $id = $_GET['supprimer_ville'];
+    $bdd->exec("DELETE FROM Météo WHERE id=$id");
+}
+
 //Lire les infos
 $requete = $bdd->query('SELECT * FROM Météo');
 
@@ -66,7 +71,7 @@ $requete->closeCursor();
       <th scope="col">Ville</th>
       <th scope="col">Haut</th>
       <th scope="col">Bas</th>
-
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -76,7 +81,9 @@ $requete->closeCursor();
         <td><?=$donnees['ville']?></td>
         <td><?=$donnees['haut']?></td>
         <td><?=$donnees['bas']?></td>
-
+        <td>
+        <a class="btn btn-danger stretched-link" href="index.php?supprimer_ville=<?php echo $donnees['id'] ?>">Remove</a>
+        </td>
     </tr>
     <?php endforeach?>
   </tbody>
